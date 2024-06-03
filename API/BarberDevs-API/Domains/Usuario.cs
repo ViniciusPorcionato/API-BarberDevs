@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BarberDevs_API.Domains
 {
@@ -24,6 +25,10 @@ namespace BarberDevs_API.Domains
         [Column(TypeName = "VARCHAR(100)")]
         [Required(ErrorMessage = "O campo nome é obrigatório!")]
         public string? Nome { get; set; }
+
+        [Column(TypeName = "TEXT")]
+        public string? Foto { get; set; }
+
 
         //public virtual Cliente? Cliente { get; set; }
 

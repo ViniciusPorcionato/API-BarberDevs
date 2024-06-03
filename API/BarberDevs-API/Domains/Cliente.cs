@@ -17,5 +17,7 @@ namespace BarberDevs_API.Domains
 
         [Column(TypeName = "INT")]
         public int Cpf { get; set; }
+
+        public virtual Usuario? UsuarioCliente { get; set; } = null!;
     }
 }

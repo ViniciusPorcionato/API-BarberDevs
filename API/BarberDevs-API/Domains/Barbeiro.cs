@@ -21,5 +21,8 @@ namespace BarberDevs_API.Domains
         //Chave referencia Barbearia
         [ForeignKey("IdBarbearia")]
         public Barbearia? Barbearia { get; set; }
+
+        public virtual Usuario? UsuarioBarbeiro { get; set; } = null!;
+
     }
 }

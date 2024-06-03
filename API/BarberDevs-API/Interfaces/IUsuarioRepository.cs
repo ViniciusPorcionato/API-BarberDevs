@@ -10,8 +10,9 @@ namespace BarberDevs_API.Interfaces
 
         Usuario BuscarPorEmailESenha(string email, string senha);
 
-        bool AlterarSenha(string email, string senha);
+        bool AlterarSenha(string email, string senhaNova);
 
         public void AtualizarFoto(Guid id, string novaUrlFoto);
+
     }
 }
