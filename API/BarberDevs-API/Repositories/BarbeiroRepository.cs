@@ -2,6 +2,7 @@
 using BarberDevs_API.Domains;
 using BarberDevs_API.Interfaces;
 using BarberDevs_API.Utils;
+using BarberDevs_API.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Crypto.Signers;
 
@@ -12,11 +13,42 @@ namespace BarberDevs_API.Repositories
 
         BarberDevsContext ctx = new BarberDevsContext();
 
-        //Terminar essa função
-        public List<Agendamento> BuscarPorData(DateTime DataAgendamento, Guid idBarbeiro)
+        public Barbeiro AtualizarPerfil(Guid id, BarbeiroViewModel barbeiro)
         {
-            throw new NotImplementedException();
+            Barbeiro barbeiroBuscado = ctx.Barbeiro.Include(x => x.Barbearia).Include(x => x.UsuarioBarbeiro).FirstOrDefault(x => x.IdBarbeiro == id)!;
+
+            if (barbeiro.Rg != null)
+            {
+                barbeiroBuscado!.Rg = barbeiro.Rg;
+            }
+
+            if (barbeiro.Cpf != null)
+            {
+                barbeiroBuscado.Cpf = barbeiro.Cpf;
+            }
+
+            if (barbeiro.Descricao != null)
+            {
+                barbeiroBuscado.Descricao = barbeiro.Descricao;
+            }
+
+            if (barbeiro.Nome != null)
+            {
+                barbeiroBuscado.UsuarioBarbeiro!.Nome = barbeiro.Nome;
+            }
+
+            if (barbeiro.Email != null)
+            {
+                barbeiroBuscado.UsuarioBarbeiro!.Email = barbeiro.Email;
+            }
+
+            ctx.Barbeiro.Update(barbeiroBuscado!);
+            ctx.SaveChanges();
+
+            return barbeiroBuscado!;
+
         }
+
 
         public Barbeiro BuscarPorId(Guid id)
         {
@@ -39,6 +71,19 @@ namespace BarberDevs_API.Repositories
             barbeiro.Senha = Criptografia.GerarHash(barbeiro.Senha!);
             ctx.Usuario.Add(barbeiro);
             ctx.SaveChanges();
+        }
+
+        public List<Agendamento> ListarAgendamentos(Guid idBarbeiro)
+        {
+            try
+            {
+                return ctx.Agendamento.ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public List<Barbeiro> ListarTodos()

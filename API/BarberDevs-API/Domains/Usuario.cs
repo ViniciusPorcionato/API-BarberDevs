@@ -29,6 +29,9 @@ namespace BarberDevs_API.Domains
         [Column(TypeName = "TEXT")]
         public string? Foto { get; set; }
 
+        [Column(TypeName = "INT")]
+        public int? CodRecupSenha { get; set; }
+
 
         //public virtual Cliente? Cliente { get; set; }
 

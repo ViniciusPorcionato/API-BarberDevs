@@ -23,6 +23,7 @@ namespace BarberDevs_API.Repositories
                 user.Senha = Criptografia.GerarHash(senhaNova);
 
                 ctx.Update(user);
+
                 return true;
             }
             catch (Exception)

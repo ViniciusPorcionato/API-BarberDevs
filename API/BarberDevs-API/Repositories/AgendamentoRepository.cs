@@ -40,22 +40,65 @@ namespace BarberDevs_API.Repositories
 
         public void Deletar(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Agendamento agendamentoBuscado = ctx.Agendamento.FirstOrDefault(x => x.IdAgendamento == id)!;
+
+                if (agendamentoBuscado != null)
+                {
+                    ctx.Agendamento.Remove(agendamentoBuscado);
+                }
+
+                ctx.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public List<Agendamento> ListarPorBarbeiro()
+        public List<Agendamento> ListarPorBarbeiro(Guid idBarbeiro)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<Agendamento> listaAgendamentos = ctx.Agendamento
+                .Include(x => x.Cliente)
+                .Include(x => x.Barbeiro)
+                .Where(x => x.IdBarbeiro != null && x.IdBarbeiro == idBarbeiro)
+                .ToList();
+
+                return listaAgendamentos;
+            } 
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public List<Agendamento> ListarPorCliente()
+
+        public List<Agendamento> ListarPorCliente(Guid idCliente)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<Agendamento> listaAgendamentos = ctx.Agendamento
+                    .Include(x => x.Cliente)
+                    .Include (x => x.Barbeiro)
+                    .Where(x => x.IdCliente != null && x.IdCliente == idCliente) .ToList();
+
+                return listaAgendamentos;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public List<Agendamento> ListarTodos()
         {
-            throw new NotImplementedException();
+            return ctx.Agendamento.ToList();
         }
     }
 }

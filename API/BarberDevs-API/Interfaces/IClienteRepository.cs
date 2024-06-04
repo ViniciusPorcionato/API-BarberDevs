@@ -1,4 +1,5 @@
 ﻿using BarberDevs_API.Domains;
+using BarberDevs_API.ViewModels;
 
 namespace BarberDevs_API.Interfaces
 {
@@ -7,6 +8,7 @@ namespace BarberDevs_API.Interfaces
         public List<Cliente> ListarTodos();
         public Cliente BuscarPorId(Guid id);
         public void Cadastrar(Usuario cliente);
-        public List<Agendamento> BuscarPorData(DateTime DataAgendamento, Guid idCliente);
+        public Cliente AtualizarPerfil(Guid id, ClienteViewModel cliente);
+        public List<Agendamento> ListarAgendamentos(Guid idCliente);
     }
 }

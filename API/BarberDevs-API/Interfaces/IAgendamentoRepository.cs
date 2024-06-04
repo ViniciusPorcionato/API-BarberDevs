@@ -8,7 +8,7 @@ namespace BarberDevs_API.Interfaces
         public Agendamento BuscarPorId(Guid id);
         public void Deletar(Guid id);
         public List<Agendamento> ListarTodos();
-        public List<Agendamento> ListarPorBarbeiro();
-        public List<Agendamento> ListarPorCliente();
+        public List<Agendamento> ListarPorBarbeiro(Guid idBarbeiro);
+        public List<Agendamento> ListarPorCliente(Guid idCliente);
     }
 }

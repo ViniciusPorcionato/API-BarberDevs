@@ -2,6 +2,7 @@
 using BarberDevs_API.Domains;
 using BarberDevs_API.Interfaces;
 using BarberDevs_API.Utils;
+using BarberDevs_API.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace BarberDevs_API.Repositories
@@ -9,9 +10,35 @@ namespace BarberDevs_API.Repositories
     public class ClienteRepository : IClienteRepository
     {
         BarberDevsContext ctx = new BarberDevsContext();
-        public List<Agendamento> BuscarPorData(DateTime DataAgendamento, Guid idCliente)
+
+        public Cliente AtualizarPerfil(Guid id, ClienteViewModel cliente)
         {
-            throw new NotImplementedException();
+            Cliente clienteBuscado = ctx.Cliente.Include(x => x.UsuarioCliente).FirstOrDefault(x => x.IdCliente == id)!;
+
+            if (cliente.Rg != null)
+            {
+                clienteBuscado.Rg = cliente.Rg;
+            }
+
+            if (cliente.Cpf != null)
+            {
+                clienteBuscado.Cpf = cliente.Cpf;
+            }
+
+            if (cliente.Nome != null)
+            {
+                clienteBuscado.UsuarioCliente!.Nome = cliente.Nome;
+            }
+
+            if (cliente.Email != null)
+            {
+                clienteBuscado.UsuarioCliente!.Email = cliente.Email;
+            }
+
+            ctx.Cliente.Update(clienteBuscado!);
+            ctx.SaveChanges();
+
+            return (clienteBuscado!);
         }
 
         public Cliente BuscarPorId(Guid id)
@@ -50,6 +77,19 @@ namespace BarberDevs_API.Repositories
             try
             {
                 return ctx.Cliente.ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<Agendamento> ListarAgendamentos(Guid idCliente)
+        {
+            try
+            {
+                return ctx.Agendamento.ToList();
             }
             catch (Exception)
             {
