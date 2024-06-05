@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BarberDevs_API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class bd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,26 +31,15 @@ namespace BarberDevs_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cliente",
-                columns: table => new
-                {
-                    IdCliente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Rg = table.Column<int>(type: "INT", nullable: false),
-                    Cpf = table.Column<int>(type: "INT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cliente", x => x.IdCliente);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
                     IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Email = table.Column<string>(type: "VARCHAR(200)", nullable: false),
-                    Senha = table.Column<string>(type: "VARCHAR(100)", maxLength: 65, nullable: false),
-                    Nome = table.Column<string>(type: "VARCHAR(100)", nullable: false)
+                    Senha = table.Column<string>(type: "VARCHAR(65)", maxLength: 65, nullable: false),
+                    Nome = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    Foto = table.Column<string>(type: "TEXT", nullable: true),
+                    CodRecupSenha = table.Column<int>(type: "INT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,7 +54,8 @@ namespace BarberDevs_API.Migrations
                     Rg = table.Column<int>(type: "INT", nullable: false),
                     Cpf = table.Column<int>(type: "INT", nullable: false),
                     Descricao = table.Column<string>(type: "TEXT", nullable: true),
-                    IdBarbearia = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IdBarbearia = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UsuarioBarbeiroIdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,6 +65,30 @@ namespace BarberDevs_API.Migrations
                         column: x => x.IdBarbearia,
                         principalTable: "Barbearia",
                         principalColumn: "IdBarbearia");
+                    table.ForeignKey(
+                        name: "FK_Barbeiro_Usuario_UsuarioBarbeiroIdUsuario",
+                        column: x => x.UsuarioBarbeiroIdUsuario,
+                        principalTable: "Usuario",
+                        principalColumn: "IdUsuario");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cliente",
+                columns: table => new
+                {
+                    IdCliente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Rg = table.Column<int>(type: "INT", nullable: false),
+                    Cpf = table.Column<int>(type: "INT", nullable: false),
+                    UsuarioClienteIdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cliente", x => x.IdCliente);
+                    table.ForeignKey(
+                        name: "FK_Cliente_Usuario_UsuarioClienteIdUsuario",
+                        column: x => x.UsuarioClienteIdUsuario,
+                        principalTable: "Usuario",
+                        principalColumn: "IdUsuario");
                 });
 
             migrationBuilder.CreateTable(
@@ -84,8 +98,8 @@ namespace BarberDevs_API.Migrations
                     IdAgendamento = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DataAgendamento = table.Column<DateTime>(type: "datetime2", nullable: true),
                     HoraAgendamento = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IdCliente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdBarbeiro = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdCliente = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IdBarbeiro = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,14 +108,12 @@ namespace BarberDevs_API.Migrations
                         name: "FK_Agendamento_Barbeiro_IdBarbeiro",
                         column: x => x.IdBarbeiro,
                         principalTable: "Barbeiro",
-                        principalColumn: "IdBarbeiro",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdBarbeiro");
                     table.ForeignKey(
                         name: "FK_Agendamento_Cliente_IdCliente",
                         column: x => x.IdCliente,
                         principalTable: "Cliente",
-                        principalColumn: "IdCliente",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdCliente");
                 });
 
             migrationBuilder.CreateIndex(
@@ -120,6 +132,11 @@ namespace BarberDevs_API.Migrations
                 column: "IdBarbearia");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Barbeiro_UsuarioBarbeiroIdUsuario",
+                table: "Barbeiro",
+                column: "UsuarioBarbeiroIdUsuario");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cliente_Cpf",
                 table: "Cliente",
                 column: "Cpf",
@@ -130,6 +147,11 @@ namespace BarberDevs_API.Migrations
                 table: "Cliente",
                 column: "Rg",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cliente_UsuarioClienteIdUsuario",
+                table: "Cliente",
+                column: "UsuarioClienteIdUsuario");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuario_Email",
@@ -145,9 +167,6 @@ namespace BarberDevs_API.Migrations
                 name: "Agendamento");
 
             migrationBuilder.DropTable(
-                name: "Usuario");
-
-            migrationBuilder.DropTable(
                 name: "Barbeiro");
 
             migrationBuilder.DropTable(
@@ -155,6 +174,9 @@ namespace BarberDevs_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Barbearia");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
         }
     }
 }

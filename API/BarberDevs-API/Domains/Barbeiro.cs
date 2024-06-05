@@ -22,6 +22,8 @@ namespace BarberDevs_API.Domains
         [ForeignKey("IdBarbearia")]
         public Barbearia? Barbearia { get; set; }
 
+        public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
+
         public virtual Usuario? UsuarioBarbeiro { get; set; } = null!;
 
     }

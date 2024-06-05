@@ -1,3 +1,5 @@
+using BarberDevs_API.Contexts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -94,7 +96,13 @@ builder.Services.AddSwaggerGen(options =>
 
 });
 
+//Configuração da program
+builder.Services.AddDbContext<BarberDevsContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
+
+//Habilita o CORS
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -15,12 +15,12 @@ namespace BarberDevs_API.Domains
 
         [ForeignKey("IdCliente")]
         public Cliente? Cliente { get; set; }
-        public Guid IdCliente { get; set; }
+        public Guid? IdCliente { get; set; }
 
 
         [ForeignKey("IdBarbeiro")]
         public Barbeiro? Barbeiro { get; set; }
-        public Guid IdBarbeiro { get; set; }
+        public Guid? IdBarbeiro { get; set; }
 
     }
 }

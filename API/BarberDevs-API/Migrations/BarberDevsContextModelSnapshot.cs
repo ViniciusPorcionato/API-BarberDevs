@@ -17,7 +17,7 @@ namespace BarberDevs_API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "7.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -34,10 +34,10 @@ namespace BarberDevs_API.Migrations
                     b.Property<DateTime?>("HoraAgendamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IdBarbeiro")
+                    b.Property<Guid?>("IdBarbeiro")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("IdCliente")
+                    b.Property<Guid?>("IdCliente")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("IdAgendamento");
@@ -102,9 +102,14 @@ namespace BarberDevs_API.Migrations
                     b.Property<int>("Rg")
                         .HasColumnType("INT");
 
+                    b.Property<Guid?>("UsuarioBarbeiroIdUsuario")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("IdBarbeiro");
 
                     b.HasIndex("IdBarbearia");
+
+                    b.HasIndex("UsuarioBarbeiroIdUsuario");
 
                     b.ToTable("Barbeiro");
                 });
@@ -121,6 +126,9 @@ namespace BarberDevs_API.Migrations
                     b.Property<int>("Rg")
                         .HasColumnType("INT");
 
+                    b.Property<Guid?>("UsuarioClienteIdUsuario")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("IdCliente");
 
                     b.HasIndex("Cpf")
@@ -128,6 +136,8 @@ namespace BarberDevs_API.Migrations
 
                     b.HasIndex("Rg")
                         .IsUnique();
+
+                    b.HasIndex("UsuarioClienteIdUsuario");
 
                     b.ToTable("Cliente");
                 });
@@ -138,9 +148,15 @@ namespace BarberDevs_API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int?>("CodRecupSenha")
+                        .HasColumnType("INT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("VARCHAR(200)");
+
+                    b.Property<string>("Foto")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -163,15 +179,11 @@ namespace BarberDevs_API.Migrations
                 {
                     b.HasOne("BarberDevs_API.Domains.Barbeiro", "Barbeiro")
                         .WithMany()
-                        .HasForeignKey("IdBarbeiro")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdBarbeiro");
 
                     b.HasOne("BarberDevs_API.Domains.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("IdCliente")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdCliente");
 
                     b.Navigation("Barbeiro");
 
@@ -184,7 +196,22 @@ namespace BarberDevs_API.Migrations
                         .WithMany()
                         .HasForeignKey("IdBarbearia");
 
+                    b.HasOne("BarberDevs_API.Domains.Usuario", "UsuarioBarbeiro")
+                        .WithMany()
+                        .HasForeignKey("UsuarioBarbeiroIdUsuario");
+
                     b.Navigation("Barbearia");
+
+                    b.Navigation("UsuarioBarbeiro");
+                });
+
+            modelBuilder.Entity("BarberDevs_API.Domains.Cliente", b =>
+                {
+                    b.HasOne("BarberDevs_API.Domains.Usuario", "UsuarioCliente")
+                        .WithMany()
+                        .HasForeignKey("UsuarioClienteIdUsuario");
+
+                    b.Navigation("UsuarioCliente");
                 });
 #pragma warning restore 612, 618
         }

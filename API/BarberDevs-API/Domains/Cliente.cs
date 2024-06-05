@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using IndexAttribute = Microsoft.EntityFrameworkCore.IndexAttribute;
 
 namespace BarberDevs_API.Domains
 {
@@ -9,6 +10,11 @@ namespace BarberDevs_API.Domains
     [Index(nameof(Cpf), IsUnique = true)]
     public class Cliente
     {
+
+        //Chave referencia Tipo de Usuario
+        [ForeignKey("IdUsuario")]
+        public Usuario? Usuario { get; set; }
+
         [Key]
         public Guid IdCliente { get; set; } = new Guid();
 
@@ -18,6 +24,7 @@ namespace BarberDevs_API.Domains
         [Column(TypeName = "INT")]
         public int Cpf { get; set; }
 
+        public virtual ICollection<Agendamento> Agendamento { get; set; } = new List<Agendamento>();
         public virtual Usuario? UsuarioCliente { get; set; } = null!;
     }
 }

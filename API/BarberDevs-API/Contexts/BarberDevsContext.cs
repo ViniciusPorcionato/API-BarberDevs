@@ -19,9 +19,16 @@ namespace BarberDevs_API.Contexts
         public  DbSet<Barbeiro> Barbeiro { get; set; }
         public  DbSet<Agendamento> Agendamento { get; set; }
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server = NOTE17-S21\\SQLSERVER; Database = BarberDevs; User Id = sa; pwd = Senai@134; TrustServerCertificate = True;");
+        //    base.OnConfiguring(optionsBuilder);
+
+        //}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server = NOTE17-S21\\SQLSERVER; Database = BarberDevs; User Id = sa; pwd = Senai@134; TrustServerCertificate = True;");
+            optionsBuilder.UseSqlServer("Server = NOTE13-S21; Database = BarberDevs; User Id = sa; pwd = Senai@134; TrustServerCertificate = True;");
             base.OnConfiguring(optionsBuilder);
 
         }

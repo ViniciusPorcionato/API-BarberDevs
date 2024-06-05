@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using IndexAttribute = Microsoft.EntityFrameworkCore.IndexAttribute;
 
 namespace BarberDevs_API.Domains
 {
@@ -32,10 +33,15 @@ namespace BarberDevs_API.Domains
         [Column(TypeName = "INT")]
         public int? CodRecupSenha { get; set; }
 
+        //Chave referencia Tipo de Usuario
+        [ForeignKey("IdTipoUsuario")]
+        public TipoUsuario? TipoUsuario { get; set; }
 
-        //public virtual Cliente? Cliente { get; set; }
+        public virtual Cliente? Cliente { get; set; }
 
-        //public virtual Barbeiro? Barbeiro { get; set; }
+        public virtual Barbeiro? Barbeiro { get; set; }
+
+        public virtual TipoUsuario? TipoUsuario { get; set; }
 
     }
 }

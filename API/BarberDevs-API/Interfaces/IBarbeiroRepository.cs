@@ -9,7 +9,7 @@ namespace BarberDevs_API.Interfaces
         public Barbeiro BuscarPorId(Guid id);
         public void Cadastrar(Usuario barbeiro);
 
-        public Barbeiro AtualizarPerfil(Guid id, BaebeiroViewModel barbeiro);
+        public Barbeiro AtualizarPerfil(Guid id, BarbeiroViewModel barbeiro);
         public List<Agendamento> ListarAgendamentos(Guid idBarbeiro);
     }
 }
