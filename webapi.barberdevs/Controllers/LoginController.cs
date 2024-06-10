@@ -37,7 +37,7 @@ namespace webapi.barberdevs.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email!),
                     new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.Nome!),
-                    new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario!.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
                     new Claim("role", usuarioBuscado.IdTipoUsuarioNavigation!.NomeTipoUsuario!)
 
                 };

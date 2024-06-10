@@ -3,6 +3,7 @@ using webapi.barberdevs.Contexts;
 using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
 using webapi.barberdevs.Utils;
+using webapi.barberdevs.ViewModel;
 
 namespace webapi.barberdevs.Repositories
 {
@@ -15,9 +16,47 @@ namespace webapi.barberdevs.Repositories
             _context = new BarberDevsContext();
         }
 
-        public void Atualizar(Guid id, Cliente cliente)
+        public Cliente Atualizar(Guid id, ClienteViewModel cliente)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Cliente clienteBuscado = _context.Clientes.Include(x => x.IdClienteNavigation).FirstOrDefault(x => x.IdCliente == id)!;
+
+                if (clienteBuscado == null)
+                {
+                    return null!;
+                }
+
+                if (cliente.Cpf != null)
+                {
+                    clienteBuscado.IdClienteNavigation.Cpf = cliente.Cpf;
+                }
+
+                if (cliente.Rg != null)
+                {
+                    clienteBuscado.IdClienteNavigation.Rg = cliente.Rg;
+                }
+
+                if (cliente.Nome != null)
+                {
+                    clienteBuscado.IdClienteNavigation.Nome = cliente.Nome;
+                }
+
+                if (cliente.Email != null)
+                {
+                    clienteBuscado.IdClienteNavigation.Email = cliente.Email;
+                }
+
+
+                _context.Clientes.Update(clienteBuscado!);
+                _context.SaveChanges();
+                return clienteBuscado!;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public Cliente BuscarPorId(Guid id)

@@ -1,4 +1,5 @@
 ﻿using webapi.barberdevs.Domains;
+using webapi.barberdevs.ViewModel;
 
 namespace webapi.barberdevs.Interfaces
 {
@@ -9,6 +10,6 @@ namespace webapi.barberdevs.Interfaces
         void Deletar(Guid id);
         List<Barbeiro> Listar();
         Barbeiro BuscarPorId(Guid id);
-        void Atualizar(Guid id, Barbeiro barbeiro);
+        Barbeiro Atualizar(Guid id, BarbeiroViewModel barbeiro);
     }
 }

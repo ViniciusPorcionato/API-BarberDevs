@@ -43,6 +43,7 @@ namespace webapi.barberdevs.Repositories
             try
             {
                 Usuario usuarioBuscado = _context.Usuarios.Find(id)!;
+
                 if (usuarioBuscado != null)
                 {
                     usuarioBuscado.Nome = usuario.Nome;
@@ -101,7 +102,7 @@ namespace webapi.barberdevs.Repositories
                     }
                 }).FirstOrDefault(x => x.Email == email);
 
-                if (user != null)
+                if (user == null)
                 {
                     return null!;
                 }

@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
 using webapi.barberdevs.Repositories;
+using webapi.barberdevs.Utils.BlobStorage;
 using webapi.barberdevs.Utils.Mail;
+using webapi.barberdevs.ViewModel;
 
 namespace webapi.barberdevs.Controllers
 {
@@ -12,45 +15,102 @@ namespace webapi.barberdevs.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        private readonly IClienteRepository clienteRepository;
+        private IClienteRepository _clienteRepository;
 
-        private readonly EmailSedingService _emailSedingService;
-
-        public ClienteController(EmailSedingService emailSedingService)
+        public ClienteController()
         {
-            clienteRepository = new ClienteRepository();
-            _emailSedingService = emailSedingService;
+            _clienteRepository = new ClienteRepository();
         }
 
-        [HttpGet("PerfilLogado")]
-        public IActionResult GetLogged()
+
+        [HttpGet("BuscarTodos")]
+        public IActionResult GetAll()
         {
             try
             {
-                Guid idUsuario = Guid.Parse(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-                return Ok(clienteRepository.BuscarPorId(idUsuario));
+                return Ok(_clienteRepository.Listar());
             }
             catch (Exception ex)
             {
+
                 return BadRequest(ex.Message);
-                throw;
             }
         }
+
 
         [HttpGet("BuscarPorId")]
-        public IActionResult BuscarPorId(Guid id)
+        public IActionResult GetById(Guid id)
         {
             try
             {
-                return Ok(clienteRepository.BuscarPorId(id));
+                return Ok(_clienteRepository.BuscarPorId(id));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("DeletarCliente")]
+        public IActionResult Delete(Guid id)
+        {
+            try
+            {
+                _clienteRepository.Deletar(id);
+                return Ok("Cliente removido!!");
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("CadastrarCliente")]
+        public async Task<IActionResult> Post([FromForm] ClienteViewModel clienteModel)
+        {
+            try
+            {
+                Usuario user = new Usuario();
+                user.Nome = clienteModel.Nome!;
+                user.Email = clienteModel.Email!;
+                user.Cpf = clienteModel.Cpf;
+                user.Rg = clienteModel.Rg;
+                user.IdTipoUsuario = clienteModel.IdTipoUsuario;
+
+                var containerName = "containerbarberdevs";
+
+                var connectionStrings = "DefaultEndpointsProtocol=https;AccountName=barberdevsaccountstorage;AccountKey=CptEN0isYWgyXPX2JKdkPqCE/+dSRanxbWilfdFetkVuSH6kJtjj2aEtk3PCEYG9zj/U4lyKOSFf+ASt2gAjRA==;EndpointSuffix=core.windows.net";
+
+                user.Foto = await AzureBlobStorageHelper.UploadImageBlobAsync(clienteModel.Arquivo!, connectionStrings, containerName);
+
+                user.Senha = clienteModel.Senha!;
+
+                user.Cliente = new Cliente();
+
+                _clienteRepository.Cadastrar(user);
+                return Ok("Cliente cadastrado com sucesso!");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
-                throw;
             }
         }
 
+        [HttpPut("AtualizarCliente")]
+        public IActionResult Put(Guid id, ClienteViewModel cliente)
+        {
+            try
+            {
+                _clienteRepository.Atualizar(id, cliente);
+                return Ok("Barbeiro atualizado com sucesso!");
+            }
+            catch (Exception ex)
+            {
 
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

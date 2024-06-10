@@ -21,6 +21,8 @@ public partial class Usuario
 
     public string? Cpf { get; set; }
 
+    public int? CodRecupSenha { get; set; }
+
     public virtual Barbeiro? Barbeiro { get; set; }
 
     public virtual Cliente? Cliente { get; set; }

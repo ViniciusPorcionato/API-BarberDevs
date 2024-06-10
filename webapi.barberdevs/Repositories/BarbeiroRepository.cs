@@ -3,6 +3,7 @@ using webapi.barberdevs.Contexts;
 using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
 using webapi.barberdevs.Utils;
+using webapi.barberdevs.ViewModel;
 
 namespace webapi.barberdevs.Repositories
 {
@@ -15,18 +16,54 @@ namespace webapi.barberdevs.Repositories
         {
            _context = new BarberDevsContext();
         }
-        public void Atualizar(Guid id, Barbeiro barbeiro)
+        public Barbeiro Atualizar(Guid id, BarbeiroViewModel barbeiro)
         {
-            Barbeiro barbeiroBuscado = _context.Barbeiros.Find(id)!;
-
-            if (barbeiroBuscado != null)
+            try
             {
-                barbeiroBuscado.Descricao = barbeiro.Descricao;
-            }
+                Barbeiro barbeiroBuscado = _context.Barbeiros.Include(x => x.IdBarbeiroNavigation).FirstOrDefault(x => x.IdBarbeiro == id)!;
 
-            _context.Barbeiros.Update(barbeiroBuscado!);
-            _context.SaveChanges();
+                if (barbeiroBuscado == null)
+                {
+                    return null!;
+                }
+
+                if (barbeiro.Descricao != null)
+                {
+                    barbeiroBuscado.Descricao = barbeiro.Descricao;
+                }
+
+                if (barbeiro.Cpf != null)
+                {
+                    barbeiroBuscado.IdBarbeiroNavigation.Cpf = barbeiro.Cpf;
+                }
+
+                if (barbeiro.Rg != null)
+                {
+                    barbeiroBuscado.IdBarbeiroNavigation.Rg = barbeiro.Rg;
+                }
+
+                if (barbeiro.Nome != null)
+                {
+                    barbeiroBuscado.IdBarbeiroNavigation.Nome = barbeiro.Nome;
+                }
+
+                if (barbeiro.Email != null)
+                {
+                    barbeiroBuscado.IdBarbeiroNavigation.Email = barbeiro.Email;
+                }
+
+
+                _context.Barbeiros.Update(barbeiroBuscado!);
+                _context.SaveChanges();
+                return barbeiroBuscado!;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
+
 
         public Barbeiro BuscarPorId(Guid id)
         {
