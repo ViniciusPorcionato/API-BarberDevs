@@ -12,11 +12,11 @@ namespace webapi.barberdevs.Controllers
     [ApiController]
     public class BarbeariumController : ControllerBase
     {
-        private IBarbeariumRepository _barbearium { get; set; }
+        private IBarbeariumRepository _barbeariumRepository { get; set; }
 
         public BarbeariumController()
         {
-                _barbearium =  new BarbeariumRepository();
+            _barbeariumRepository =  new BarbeariumRepository();
         }
 
         [HttpGet("ListarBarbearia")]
@@ -24,7 +24,7 @@ namespace webapi.barberdevs.Controllers
         {
             try
             {
-                return Ok(_barbearium.Listar());
+                return Ok(_barbeariumRepository.Listar());
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace webapi.barberdevs.Controllers
         {
             try
             {
-                return Ok(_barbearium.BuscarPorId(id));
+                return Ok(_barbeariumRepository.BuscarPorId(id));
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace webapi.barberdevs.Controllers
         {
             try
             {
-                _barbearium.Cadastrar(barbearium);
+                _barbeariumRepository.Cadastrar(barbearium);
                 return Ok();
             }
             catch (Exception ex)
@@ -68,7 +68,7 @@ namespace webapi.barberdevs.Controllers
         {
             try
             {
-                _barbearium.Deletar(id);
+                _barbeariumRepository.Deletar(id);
 
                 return NoContent();
             }
@@ -83,7 +83,7 @@ namespace webapi.barberdevs.Controllers
         {
             try
             {
-                _barbearium.Atualizar(id, barbearium);
+                _barbeariumRepository.Atualizar(id, barbearium);
 
                 return NoContent() ;
             }

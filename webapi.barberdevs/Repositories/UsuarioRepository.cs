@@ -106,7 +106,7 @@ namespace webapi.barberdevs.Repositories
                     return null!;
                 }
 
-                if (!Criptografia.CompararHash(senha, user.Senha!))
+                if (!Criptografia.CompararHash(senha, user!.Senha!))
                 {
                     return null!;
                 }

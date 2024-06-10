@@ -1,4 +1,6 @@
-﻿namespace webapi.barberdevs.Utils
+﻿using BCrypt.Net;
+
+namespace webapi.barberdevs.Utils
 {
     public class Criptografia
     {

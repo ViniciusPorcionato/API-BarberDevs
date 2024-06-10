@@ -5,7 +5,7 @@ namespace webapi.barberdevs.Interfaces
     public interface IClienteRepository
     {
         //CRUD
-        void Cadastrar(Cliente cliente);
+        void Cadastrar(Usuario user);
         void Deletar(Guid id);
         List<Cliente> Listar();
         Cliente BuscarPorId(Guid id);

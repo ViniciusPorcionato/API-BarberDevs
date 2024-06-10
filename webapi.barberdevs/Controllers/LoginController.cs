@@ -7,7 +7,6 @@ using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
 using webapi.barberdevs.Repositories;
 using webapi.barberdevs.ViewModel;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace webapi.barberdevs.Controllers
 {
@@ -44,15 +43,15 @@ namespace webapi.barberdevs.Controllers
                 };
 
                 //configurar a chave de segurança
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(""));
+                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("webapi.barberdevs-chave-symmetricsecuritykey"));
 
                 //credenciais
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 //configurar token
                 var meuToken = new JwtSecurityToken(
-                        issuer: "",
-                        audience: "",
+                        issuer: "BarberDevs-WebAPI",
+                        audience: "BarberDevs-WebAPI",
                         claims: claims,
                         expires: DateTime.Now.AddMinutes(30),
                         signingCredentials: creds

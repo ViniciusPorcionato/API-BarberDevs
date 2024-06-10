@@ -1,6 +1,8 @@
-﻿using webapi.barberdevs.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi.barberdevs.Contexts;
 using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
+using webapi.barberdevs.Utils;
 
 namespace webapi.barberdevs.Repositories
 {
@@ -22,7 +24,9 @@ namespace webapi.barberdevs.Repositories
         {
             try
             {
-                return _context.Clientes.Find(id)!;
+                return _context.Clientes
+                    //.Include(x => x.IdClienteNavigation)
+                    .FirstOrDefault(x => x.IdCliente == id)!;
 
             }
             catch (Exception)
@@ -32,11 +36,12 @@ namespace webapi.barberdevs.Repositories
             }
         }
 
-        public void Cadastrar(Cliente cliente)
+        public void Cadastrar(Usuario user)
         {
             try
             {
-                _context.Clientes.Add(cliente);
+                user.Senha = Criptografia.GerarHash(user.Senha!);
+                _context.Usuarios.Add(user);
                 _context.SaveChanges();
             }
             catch (Exception)

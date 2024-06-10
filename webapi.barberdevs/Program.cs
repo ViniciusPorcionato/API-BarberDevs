@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using webapi.barberdevs.Contexts;
+using webapi.barberdevs.Utils.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,16 +30,16 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
 
         //forma de criptografia e valida a chave de autenticação
-        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("vital-webapi-chave-symmetricsecuritykey")),
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("webapi.barberdevs-chave-symmetricsecuritykey")),
 
         //valida o tempo de expiração do token
         ClockSkew = TimeSpan.FromMinutes(30),
 
         //nome do issuer (de onde está vindo)
-        ValidIssuer = "Vital-WebAPI",
+        ValidIssuer = "BarberDevs-WebAPI",
 
         //nome do audience (para onde está indo)
-        ValidAudience = "Vital-WebAPI"
+        ValidAudience = "BarberDevs-WebAPI"
     };
 });
 
@@ -89,6 +90,14 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+
+// Configure EmailSettings
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection(nameof(EmailSettings)));
+
+// Registrando o serviço de e-mail como uma instância transitória, que é criada cada vez que é solicitada
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+builder.Services.AddScoped<EmailSedingService>();
 
 builder.Services.AddDbContext<BarberDevsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlDataBase")));

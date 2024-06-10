@@ -2,6 +2,7 @@
 using webapi.barberdevs.Contexts;
 using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
+using webapi.barberdevs.Utils;
 
 namespace webapi.barberdevs.Repositories
 {
@@ -40,11 +41,12 @@ namespace webapi.barberdevs.Repositories
             }
         }
 
-        public void Cadastrar(Barbeiro barbeiro)
+        public void Cadastrar(Usuario user)
         {
             try
             {
-                _context.Barbeiros.Add(barbeiro);
+                user.Senha = Criptografia.GerarHash(user.Senha);
+                _context.Usuarios.Add(user);
                 _context.SaveChanges();
             }
             catch (Exception)
