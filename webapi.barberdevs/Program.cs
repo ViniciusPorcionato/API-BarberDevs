@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using webapi.barberdevs.Contexts;
 using webapi.barberdevs.Utils.Mail;
 
@@ -8,7 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+// Add services to the container.
+builder.Services
+    .AddControllers()
+        .AddNewtonsoftJson(options =>
+        {
+            // Ignora os loopings nas consultas
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            // Ignora valores nulos ao fazer junções nas consultas
+            options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+        }
+    );
 //Adiciona serviço de Jwt Bearer (forma de autenticação)
 builder.Services.AddAuthentication(options =>
 {
@@ -55,7 +66,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "API Vital",
+        Title = "API BarberDevs",
         Description = "Backend API",
         Contact = new OpenApiContact
         {

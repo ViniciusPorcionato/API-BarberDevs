@@ -64,7 +64,7 @@ namespace webapi.barberdevs.Repositories
             try
             {
                 return _context.Clientes
-                    //.Include(x => x.IdClienteNavigation)
+                    .Include(x => x.IdClienteNavigation)
                     .FirstOrDefault(x => x.IdCliente == id)!;
 
             }

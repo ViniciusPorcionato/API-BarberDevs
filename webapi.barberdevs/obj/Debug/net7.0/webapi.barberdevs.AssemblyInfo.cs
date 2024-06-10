@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("webapi.barberdevs")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9fd8f2dd1b9973a46f2b75184771578f4c170a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f3c3aac11a6052a962ebc5dbfb5eaa975ac4c875")]
 [assembly: System.Reflection.AssemblyProductAttribute("webapi.barberdevs")]
 [assembly: System.Reflection.AssemblyTitleAttribute("webapi.barberdevs")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

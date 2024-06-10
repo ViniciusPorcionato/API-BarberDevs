@@ -69,7 +69,10 @@ namespace webapi.barberdevs.Repositories
         {
             try
             {
-                return _context.Barbeiros.Find(id)!;
+                return _context.Barbeiros
+                   .Include(x => x.IdBarbeiroNavigation)
+                   .Include(x => x.IdBarbeariaNavigation)
+                   .FirstOrDefault(x => x.IdBarbeiro == id)!;
             }
             catch (Exception)
             {
