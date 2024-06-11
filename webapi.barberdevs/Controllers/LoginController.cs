@@ -21,7 +21,7 @@ namespace webapi.barberdevs.Controllers
                 _usuarioRepository = new UsuarioRepository();
         }
 
-        [HttpPost("Login")]
+        [HttpPost]
         public IActionResult Login(LoginViewModel usuario)
         {
             try
