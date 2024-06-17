@@ -1,4 +1,5 @@
-﻿using webapi.barberdevs.Contexts;
+﻿using Microsoft.EntityFrameworkCore;
+using webapi.barberdevs.Contexts;
 using webapi.barberdevs.Domains;
 using webapi.barberdevs.Interfaces;
 
@@ -62,7 +63,10 @@ namespace webapi.barberdevs.Repositories
         {
             try
             {
-                return _context.Agendamentos.Select(b => new Agendamento
+                return _context.Agendamentos
+                    .Include(x => x.IdClienteNavigation!.IdClienteNavigation)
+                    .Include(x => x.IdBarbeiroNavigation!.IdBarbeiroNavigation)
+                    .Select(b => new Agendamento
                 {
                     DataAgendamento = b.DataAgendamento,
                     IdBarbeiro = b.IdBarbeiro,
@@ -83,7 +87,10 @@ namespace webapi.barberdevs.Repositories
         {
             try
             {
-                return _context.Agendamentos.Select(c => new Agendamento
+                return _context.Agendamentos
+                    .Include(x => x.IdClienteNavigation!.IdClienteNavigation)
+                    .Include(x => x.IdBarbeiroNavigation!.IdBarbeiroNavigation)
+                    .Select(c => new Agendamento
                 {
                     DataAgendamento = c.DataAgendamento,
                     IdBarbeiro = c.IdBarbeiro,

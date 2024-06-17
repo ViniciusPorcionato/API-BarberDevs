@@ -84,7 +84,7 @@ namespace webapi.barberdevs.Controllers
             {
                 Agendamento agendamentoBuscado = _agendamentoRepository.BuscarPorId(id);
 
-                return Ok(_agendamentoRepository);
+                return Ok(agendamentoBuscado);
             }
             catch (Exception ex)
             {

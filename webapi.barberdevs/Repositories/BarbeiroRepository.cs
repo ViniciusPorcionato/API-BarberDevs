@@ -120,7 +120,7 @@ namespace webapi.barberdevs.Repositories
         {
             try
             {
-                return _context.Barbeiros.ToList();
+                return _context.Barbeiros.Include(x => x.IdBarbeiroNavigation).ToList();
             }
             catch (Exception)
             {
