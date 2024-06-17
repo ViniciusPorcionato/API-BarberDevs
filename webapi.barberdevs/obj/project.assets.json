@@ -3802,19 +3802,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\47423489824\\.nuget\\packages\\": {}
+    "C:\\Users\\50866670890\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\47423489824\\Desktop\\API-BarberDevs\\webapi.barberdevs\\webapi.barberdevs.csproj",
+      "projectUniqueName": "C:\\Users\\50866670890\\Desktop\\API-BarberDevs\\webapi.barberdevs\\webapi.barberdevs.csproj",
       "projectName": "webapi.barberdevs",
-      "projectPath": "C:\\Users\\47423489824\\Desktop\\API-BarberDevs\\webapi.barberdevs\\webapi.barberdevs.csproj",
-      "packagesPath": "C:\\Users\\47423489824\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\47423489824\\Desktop\\API-BarberDevs\\webapi.barberdevs\\obj\\",
+      "projectPath": "C:\\Users\\50866670890\\Desktop\\API-BarberDevs\\webapi.barberdevs\\webapi.barberdevs.csproj",
+      "packagesPath": "C:\\Users\\50866670890\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\50866670890\\Desktop\\API-BarberDevs\\webapi.barberdevs\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\47423489824\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\50866670890\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3822,6 +3827,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3902,24 +3908,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.15, 7.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.15, 7.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.15, 7.0.15]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.15, 7.0.15]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
